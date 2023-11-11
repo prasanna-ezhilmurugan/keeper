@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import Note from "./Note";
-// import notes from "../notes";
 import CreateArea from "./CreateArea";
 
 function App() {
@@ -10,15 +9,28 @@ function App() {
 
   function addNote(note) {
     setNote((prevValue) => [...prevValue, note]);
-    console.log(notes);
   }
+  function deleteNote(index) {
+    setNote(() => {
+      return notes.filter((note) => {
+        return note.id !== index;
+      });
+    });
+  }
+
   return (
     <div>
       <Header />
       <CreateArea onAdd={addNote} />
       {notes.map((note) => {
         return (
-          <Note key={note.key} title={note.title} content={note.content} />
+          <Note
+            key={note.key}
+            id={note.key}
+            title={note.title}
+            content={note.content}
+            onDel={deleteNote}
+          />
         );
       })}
       <Footer />
